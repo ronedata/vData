@@ -1,0 +1,193 @@
+/* Bootstrap-এর উপরে সাজসজ্জা — বাংলাদেশের সবুজ, বাংলা ফন্ট, টেবিল */
+
+:root{
+  --sobuj:#006a4e;          /* বাংলাদেশের পতাকার সবুজ */
+  --sobuj-garo:#004d39;
+  --sobuj-halka:#e8f3ef;
+  --lal:#f42a41;            /* পতাকার লাল — শুধু ইঙ্গিতে */
+  --bs-body-font-family:'Noto Sans Bengali','Nirmala UI','SolaimanLipi',
+                        system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+body{font-family:var(--bs-body-font-family);line-height:1.6}
+
+.bg-brand{background:var(--sobuj)!important}
+.btn-brand{background:var(--sobuj);border-color:var(--sobuj);color:#fff;font-weight:600}
+.btn-brand:hover,.btn-brand:focus{background:var(--sobuj-garo);border-color:var(--sobuj-garo);color:#fff}
+.form-select:focus,.form-control:focus{
+  border-color:var(--sobuj);box-shadow:0 0 0 .2rem rgba(0,106,78,.18)}
+.text-danger{color:var(--lal)!important}
+.alert-success{--bs-alert-bg:var(--sobuj-halka);--bs-alert-color:var(--sobuj-garo);
+  --bs-alert-border-color:#bfded4}
+.page-item.active .page-link{background:var(--sobuj);border-color:var(--sobuj)}
+.page-link{color:var(--sobuj)}
+.page-link:focus{box-shadow:0 0 0 .2rem rgba(0,106,78,.2)}
+
+.navbar-brand{font-size:1.02rem;font-weight:600}
+.navbar-text{font-size:.78rem;opacity:.9;color:#fff!important}
+
+.section-label{font-size:.78rem;font-weight:600;letter-spacing:.4px;
+  text-transform:uppercase;color:#6c757d;margin:.35rem 0 .6rem}
+.form-label{font-size:.82rem;color:#6c757d;margin-bottom:.25rem}
+.form-select,.form-control{min-height:46px}
+.form-select:disabled{background-color:#f1f3f5}
+#ফিল্টার-বোতাম[aria-expanded="false"] .chev{display:inline-block;transform:rotate(-90deg)}
+#ফিল্টার-বোতাম .chev{transition:transform .2s}
+
+/* ---------- অবস্থান পট্টি ---------- */
+#অবস্থান-পট্টি{font-size:.86rem}
+.thikana-path{color:#495057}
+.thikana-path b{color:var(--sobuj-garo)}
+
+/* ---------- টেবিল ---------- */
+.voter-table{font-size:.92rem}
+.voter-table thead th{
+  background:var(--sobuj-halka);color:var(--sobuj-garo);
+  font-size:.8rem;font-weight:600;white-space:nowrap;
+  border-bottom:2px solid #bfded4;padding:.6rem .75rem}
+.voter-table td{padding:.6rem .75rem;vertical-align:top}
+.voter-table .nam{font-weight:600}
+.voter-table .thikana{display:block;font-size:.78rem;color:#6c757d;margin-top:.1rem}
+.voter-table .nombor{font-size:.9rem;letter-spacing:.4px;white-space:nowrap}
+.voter-table .krom{color:#adb5bd;font-size:.85rem}
+mark{background:#fff3cd;padding:0 .12em;border-radius:.2em}
+
+/* মোবাইলে টেবিল ভেঙে সারি-কার্ড হয়ে যায় */
+@media (max-width:767.98px){
+  .voter-table thead{display:none}
+  .voter-table,.voter-table tbody,.voter-table tr,.voter-table td{
+    display:block;width:auto}
+
+  .voter-table tr{
+    border:1px solid #dee2e6;border-radius:.6rem;background:#fff;
+    margin:.75rem .75rem;padding:.6rem .25rem .5rem}
+  .voter-table tr + tr{margin-top:.75rem}
+
+  /* প্রতিটি ঘর: বাঁয়ে শিরোনাম, ডানে মান — flex বলে সন্তান যতগুলোই হোক ভাঙে না */
+  .voter-table td{
+    display:flex;align-items:baseline;gap:.6rem;
+    border:0;padding:.3rem .85rem}
+  .voter-table td::before{
+    content:attr(data-label);flex:0 0 6.2rem;
+    color:#6c757d;font-size:.8rem}
+  .voter-table td .val{flex:1 1 auto;min-width:0}
+
+  /* ক্রমিক — কার্ডের উপরে ডান দিকে ছোট করে */
+  .voter-table td.krom-cell{justify-content:flex-end;padding:0 .85rem .1rem}
+  .voter-table td.krom-cell::before{
+    flex:0 0 auto;content:'ক্রমিক';font-size:.75rem}
+  .voter-table td.krom-cell .val{flex:0 0 auto;color:#6c757d;font-size:.8rem}
+
+  /* নাম — পুরো চওড়া, বড় হরফ, নিচে ঠিকানা */
+  .voter-table td.nam-cell{
+    display:block;padding:.1rem .85rem .55rem;
+    border-bottom:1px solid #eef0f2;margin-bottom:.35rem}
+  .voter-table td.nam-cell::before{display:none}
+  .voter-table td.nam-cell .nam{font-size:1.02rem;display:block}
+
+  .navbar-text{display:none}
+}
+
+/* ---------- অন্ধকার মোড ---------- */
+@media (prefers-color-scheme:dark){
+  :root{--sobuj:#12a077;--sobuj-garo:#7ee0c0;--sobuj-halka:#10322a}
+  body{--bs-body-bg:#111715;--bs-body-color:#e6ebe9}
+  .bg-body-tertiary{background:#111715!important}
+  .card{background:#19211e;color:#e6ebe9}
+  .btn-brand{color:#04231b}
+  .btn-brand:hover,.btn-brand:focus{color:#04231b}
+  .form-control,.form-select{background:#141b19;border-color:#2b3733;color:#e6ebe9}
+  .form-select:disabled{background:#171f1c}
+  .section-label,.form-label,.thikana-path,
+  .voter-table .thikana{color:#93a49e}
+  .voter-table{--bs-table-color:#e6ebe9;--bs-table-bg:transparent;
+    --bs-table-hover-color:#e6ebe9;--bs-table-hover-bg:#1f2a26}
+  .voter-table thead th{border-bottom-color:#28453c}
+  .voter-table tr{background:#19211e;border-color:#2b3733}
+  .voter-table td{border-color:#2b3733}
+  hr{border-color:#2b3733}
+  mark{background:#6b5310;color:#fff}
+  .btn-outline-secondary{color:#c2ccc8;border-color:#39453f}
+  .alert-success{--bs-alert-bg:#10322a;--bs-alert-color:#7ee0c0;--bs-alert-border-color:#1c4d3f}
+}
+
+/* ---------- সারিতে ক্লিক ---------- */
+.voter-table tbody tr{cursor:pointer}
+.voter-table tbody tr:focus-visible{outline:2px solid var(--sobuj);outline-offset:-2px}
+
+/* ---------- ভ্যালিডেশন ---------- */
+.form-select:disabled.is-invalid,.was-validated .form-select:disabled:invalid{
+  background-image:none;border-color:#dee2e6}   /* বন্ধ ঘরে লাল দাগ নয় */
+.invalid-feedback{font-size:.8rem}
+
+/* ---------- বিস্তারিত মোডাল ---------- */
+.badge-soft{background:var(--sobuj-halka);color:var(--sobuj-garo);font-weight:500}
+dl.bistarito{display:grid;grid-template-columns:8rem 1fr;gap:.35rem .75rem;margin:0}
+dl.bistarito dt{font-weight:400;color:#6c757d;font-size:.86rem}
+dl.bistarito dd{margin:0;font-weight:500}
+.thikana-box{background:var(--sobuj-halka);border-radius:.5rem;padding:.85rem 1rem}
+#বিস্তারিত .modal-title{font-size:1.05rem}
+
+@media (max-width:575.98px){
+  dl.bistarito{grid-template-columns:6.5rem 1fr}
+}
+@media (prefers-color-scheme:dark){
+  .thikana-box{background:#10322a}
+  dl.bistarito dt{color:#93a49e}
+  .voter-table tbody tr:hover{background:#1f2a26}
+}
+
+/* বয়স — জন্ম তারিখের পাশেই থাকবে, আলাদা লাইনে নয় */
+.boyos{color:#6c757d;font-size:.85em;white-space:nowrap}
+
+/* ---------- সংখ্যার রিপোর্ট (লুকানো ফিচার) ---------- */
+.btn-outline-brand{color:var(--sobuj);border-color:var(--sobuj);font-weight:600}
+.btn-outline-brand:hover{background:var(--sobuj-halka);color:var(--sobuj-garo);
+  border-color:var(--sobuj)}
+.btn-check:checked + .btn-outline-brand{
+  background:var(--sobuj);border-color:var(--sobuj);color:#fff}
+
+/* সারাংশের বাক্সগুলো — চওড়ায় যতগুলো ধরে */
+.stat-box{display:flex;flex-wrap:wrap;gap:.5rem}
+.stat{flex:1 1 7.5rem;background:var(--sobuj-halka);border-radius:.5rem;
+  padding:.55rem .75rem;text-align:center}
+.stat b{display:block;font-size:1.15rem;color:var(--sobuj-garo);line-height:1.3}
+.stat span{font-size:.76rem;color:#5c6b66}
+
+.report-table{font-size:.92rem}
+.report-table thead th{
+  background:var(--sobuj-halka);color:var(--sobuj-garo);
+  font-size:.78rem;font-weight:600;white-space:nowrap;
+  border-bottom:2px solid #bfded4;padding:.55rem .7rem}
+.report-table td{padding:.5rem .7rem;vertical-align:top}
+.report-table .num{text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.report-table .thikana{display:block;font-size:.76rem;color:#6c757d}
+.report-table tbody tr[data-area]{cursor:pointer}
+.report-table tfoot td{
+  background:var(--sobuj-halka);color:var(--sobuj-garo);font-weight:600;
+  border-top:2px solid #bfded4;padding:.55rem .7rem}
+
+/* মোবাইলে টেবিল নিজেই পাশে সরে — ভেঙে কার্ড করলে সংখ্যা তুলনা করা যায় না,
+   তাই প্রথম কলামটা আটকে রাখি */
+@media (max-width:767.98px){
+  .report-table{font-size:.86rem}
+  .report-table th:first-child,.report-table td:first-child{
+    position:sticky;left:0;background:#fff;z-index:1;min-width:8.5rem}
+  .report-table thead th:first-child,.report-table tfoot td:first-child{
+    background:var(--sobuj-halka)}
+  .stat{flex:1 1 6rem}
+  .stat b{font-size:1rem}
+}
+
+@media (prefers-color-scheme:dark){
+  .stat{background:#10322a}
+  .stat span{color:#93a49e}
+  .report-table{--bs-table-color:#e6ebe9;--bs-table-bg:transparent;
+    --bs-table-hover-color:#e6ebe9;--bs-table-hover-bg:#1f2a26}
+  .report-table thead th{border-bottom-color:#28453c}
+  .report-table tfoot td{border-top-color:#28453c}
+  .report-table .thikana{color:#93a49e}
+  .report-table td:first-child{background:#19211e}
+  .btn-outline-brand{color:var(--sobuj-garo);border-color:#1c4d3f}
+  .btn-check:checked + .btn-outline-brand{color:#04231b}
+}

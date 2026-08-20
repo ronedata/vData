@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#006a4e">
+<title>নাগরিক তথ্য কেন্দ্র</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns="http://www.w3.org/2000/svg"%20viewBox="0%200%2024%2024"%20fill="none"%20stroke="%23006a4e"%20stroke-width="2"%20stroke-linecap="round"%3E%3Cpath%20d="M20%2021v-2a4%204%200%200%200-4-4H8a4%204%200%200%200-4%204v2"/%3E%3Ccircle%20cx="12"%20cy="7"%20r="4"/%3E%3C/svg%3E">
+<script src="config.js"></script>
+<link rel="stylesheet" href="vendor/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-body-tertiary">
+
+<nav class="navbar navbar-dark bg-brand shadow-sm sticky-top">
+  <div class="container-xl">
+    <span class="navbar-brand mb-0 d-flex align-items-center gap-2">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+      </svg>
+      <span id="অ্যাপ-নাম">নাগরিক তথ্য কেন্দ্র<span id="জেলা-নাম" class="opacity-75"></span></span>
+    </span>
+    <span class="navbar-text small" id="মোট-ভোটার"></span>
+  </div>
+</nav>
+
+<main class="container-xl py-3">
+
+  <div class="card shadow-sm border-0 mb-3">
+    <button class="btn btn-link text-decoration-none text-body fw-semibold d-flex
+                   justify-content-between align-items-center px-3 py-3 w-100"
+            type="button" data-bs-toggle="collapse" data-bs-target="#ফিল্টার"
+            aria-expanded="true" id="ফিল্টার-বোতাম">
+      <span class="d-flex align-items-center gap-2">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
+        <span id="শর্ত-শিরোনাম">খোঁজার শর্ত</span>
+      </span>
+      <span class="chev small text-secondary">▾</span>
+    </button>
+
+    <div class="collapse show" id="ফিল্টার">
+      <form class="card-body pt-0 needs-validation" id="খোঁজ-ফরম" novalidate>
+
+        <div class="btn-group w-100 mb-3 d-none" id="মোড-বাছাই" role="group">
+          <input type="radio" class="btn-check" name="মোড" id="মোড-খোঁজা" checked>
+          <label class="btn btn-outline-brand" for="মোড-খোঁজা">ভোটার অনুসন্ধান</label>
+          <input type="radio" class="btn-check" name="মোড" id="মোড-রিপোর্ট">
+          <label class="btn btn-outline-brand" for="মোড-রিপোর্ট">সংখ্যার রিপোর্ট</label>
+        </div>
+
+        <div class="section-label">এলাকা <span class="text-danger">*</span>
+          <span class="fw-normal text-secondary">— পাঁচটিই বেছে নিতে হবে</span></div>
+        <div class="row g-3 mb-1">
+          <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-label" for="district">জেলা</label>
+            <select class="form-select" id="district" required></select>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-label" for="seat">আসন</label>
+            <select class="form-select" id="seat" required><option value="">— বেছে নিন —</option></select>
+            <div class="invalid-feedback">আসন বেছে নিন।</div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-label" for="upazila">উপজেলা / থানা</label>
+            <select class="form-select" id="upazila" required disabled><option value="">— আগে আসন —</option></select>
+            <div class="invalid-feedback">উপজেলা / থানা বেছে নিন।</div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-label" for="union">ইউনিয়ন / ওয়ার্ড</label>
+            <select class="form-select" id="union" required disabled><option value="">— আগে উপজেলা —</option></select>
+            <div class="invalid-feedback">ইউনিয়ন / ওয়ার্ড বেছে নিন।</div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-label" for="area">ভোটার এলাকা</label>
+            <select class="form-select" id="area" required disabled><option value="">— আগে ইউনিয়ন —</option></select>
+            <div class="invalid-feedback">ভোটার এলাকা বেছে নিন।</div>
+          </div>
+          <div class="col-12 col-lg-4 d-flex align-items-end">
+            <div class="alert alert-info py-2 px-3 mb-1 w-100 d-none"
+                 id="এলাকা-তথ্য" role="status"></div>
+          </div>
+        </div>
+
+        <hr class="my-3">
+
+        <div id="তথ্য-অংশ">
+        <div class="section-label">তথ্য দিয়ে অনুসন্ধান
+          <span class="fw-normal text-secondary">— ঐচ্ছিক</span></div>
+        <div class="row g-3">
+          <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-label" for="নাম">নাম</label>
+            <input class="form-control" id="নাম" type="search" placeholder="আংশিক নামেও চলবে" autocomplete="off">
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-label" for="পিতা">পিতার নাম</label>
+            <input class="form-control" id="পিতা" type="search" autocomplete="off">
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-label" for="মাতা">মাতার নাম</label>
+            <input class="form-control" id="মাতা" type="search" autocomplete="off">
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-label" for="জন্ম">জন্ম তারিখ</label>
+            <input class="form-control" id="জন্ম" type="search"
+                   pattern="[০-৯0-9/]{4,10}" placeholder="১৯৯২ · ০৭/১৯৯২ · ০৪/০৭/১৯৯২" autocomplete="off">
+            <div class="invalid-feedback">সাল, মাস/সাল বা দিন/মাস/সাল লিখুন — যেমন ০৪/০৭/১৯৯২।</div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-label" for="পেশা">পেশা</label>
+            <select class="form-select" id="পেশা"><option value="">— সব —</option></select>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <label class="form-label" for="লিঙ্গ">লিঙ্গ</label>
+            <select class="form-select" id="লিঙ্গ">
+              <option value="">— সব —</option>
+              <option>পুরুষ</option><option>নারী</option><option>হিজড়া</option>
+            </select>
+          </div>
+        </div>
+
+        </div><!-- /তথ্য-অংশ -->
+
+        <div class="d-flex flex-wrap gap-2 mt-4">
+          <button type="submit" id="খোঁজ" class="btn btn-brand flex-grow-1 flex-sm-grow-0 px-4">খুঁজুন</button>
+          <button type="reset" id="মুছুন" class="btn btn-outline-secondary px-4">সব মুছুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="বার্তা"></div>
+
+  <div class="card shadow-sm border-0" id="ফলাফল-বাক্স" hidden>
+    <div class="card-header bg-transparent d-flex flex-wrap gap-2
+                justify-content-between align-items-center" id="অবস্থান-পট্টি"></div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0 voter-table">
+        <thead>
+          <tr>
+            <th style="width:3.5rem">ক্রমিক</th>
+            <th>নাম</th>
+            <th>পিতা</th>
+            <th>মাতা</th>
+            <th style="width:7rem">জন্ম তারিখ</th>
+            <th>পেশা</th>
+            <th style="width:5rem">লিঙ্গ</th>
+            <th style="width:9rem">ভোটার নম্বর</th>
+          </tr>
+        </thead>
+        <tbody id="ফলাফল"></tbody>
+      </table>
+    </div>
+    <div class="card-footer bg-transparent small text-secondary py-2">
+      যেকোনো সারিতে ক্লিক করলে পূর্ণ তথ্য ও ঠিকানা দেখা যাবে
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0" id="রিপোর্ট-বাক্স" hidden>
+    <div class="card-header bg-transparent" id="রিপোর্ট-শিরোনাম"></div>
+    <div class="card-body pb-2" id="রিপোর্ট-সারাংশ"></div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0 report-table">
+        <thead><tr id="রিপোর্ট-হেড"></tr></thead>
+        <tbody id="রিপোর্ট-দেহ"></tbody>
+        <tfoot id="রিপোর্ট-পা"></tfoot>
+      </table>
+    </div>
+    <div class="card-footer bg-transparent small text-secondary py-2">
+      এলাকার সারিতে ক্লিক করলে ওই এলাকার ভোটারের তালিকা খুলবে
+    </div>
+  </div>
+
+  <nav class="my-4" id="পাতা-নেভ" hidden aria-label="পৃষ্ঠা">
+    <ul class="pagination justify-content-center flex-wrap mb-2" id="পাতা-তালিকা"></ul>
+    <p class="text-center text-secondary small mb-0" id="পাতা-তথ্য"></p>
+  </nav>
+
+</main>
+
+<!-- এক ভোটারের পূর্ণ তথ্য -->
+<div class="modal fade" id="বিস্তারিত" tabindex="-1" aria-labelledby="বিস্তারিত-নাম" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0">
+      <div class="modal-header bg-brand text-white">
+        <h5 class="modal-title" id="বিস্তারিত-নাম"></h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="বন্ধ"></button>
+      </div>
+      <div class="modal-body" id="বিস্তারিত-দেহ"></div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-outline-secondary btn-sm" id="কপি">তথ্য কপি করুন</button>
+        <button type="button" class="btn btn-brand btn-sm" data-bs-dismiss="modal">বন্ধ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="vendor/bootstrap.bundle.min.js"></script>
+<script src="app.js"></script>
+<script src="report.js"></script>
+</body>
+</html>
